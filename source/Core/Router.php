@@ -3,25 +3,28 @@
 namespace Source\Core;
 
 use JetBrains\PhpStorm\NoReturn;
-use Source\Middlewares\MiddlewareInterface;
 
 class Router
 {
     private array $routes = [];
+    private string $basePath = '';
+    private array $middlewares = [];
 
-    /**
-     * Adiciona uma rota para o método HTTP especificado.
-     */
-    private function addRoute(
-        string $method,
-        string $path,
-        string $controller,
-        string $action,
-        ?string $name = null,
-        array $middlewares = []
-    ): void {
-        if (empty($path)) $path = '/';
-        if ($path[0] !== '/') $path = '/' . $path;
+    public function __construct()
+    {
+        $scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+        $this->basePath = str_replace('/index.php', '', $scriptName);
+    }
+
+    private function addRoute(string $method, string $path, string $controller, string $action, ?string $name = null, array $middlewares = []): void
+    {
+        if (empty($path)) {
+            $path = '/';
+        }
+
+        if ($path[0] !== '/') {
+            $path = '/' . $path;
+        }
 
         $pattern = preg_replace('/\{([a-zA-Z0-9_]+)\}/', '(?P<$1>[^/]+)', $path);
         $pattern = "#^" . $pattern . "$#";
@@ -31,8 +34,8 @@ class Router
             'controller' => $controller,
             'action' => $action,
             'name' => $name,
-            'middlewares' => $middlewares,
-            'path' => $path
+            'path' => $path,
+            'middlewares' => $middlewares
         ];
     }
 
@@ -61,16 +64,17 @@ class Router
         $this->addRoute('DELETE', $path, $controller, $action, $name, $middlewares);
     }
 
-    /**
-     * Despacha a rota de acordo com o URI atual e o método HTTP.
-     * Os parâmetros extraídos da URL são agrupados em um array $data
-     * e passados como único parâmetro para o método do Controller.
-     */
+    public function use(string $middleware): void
+    {
+        $this->middlewares[] = $middleware;
+    }
+
     public function dispatch(?string $uri = null): void
     {
         $method = $_SERVER['REQUEST_METHOD'] ?? 'GET';
+
         $uri = $uri ?? parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $uri = '/' . trim($uri, '/');
+        $uri = '/' . ltrim(str_replace($this->basePath, '', $uri), '/');
 
         if (!isset($this->routes[$method])) {
             $this->redirect('error.show', ['code' => 404]);
@@ -89,15 +93,24 @@ class Router
                     $data = array_merge($data, $input);
                 }
 
+                // Executa middlewares globais
+                foreach ($this->middlewares as $middleware) {
+                    if (class_exists($middleware)) {
+                        (new $middleware())->handle($this);
+                    }
+                }
+
+                // Executa middlewares específicos da rota
+                if (!empty($route['middlewares'])) {
+                    foreach ($route['middlewares'] as $middleware) {
+                        if (class_exists($middleware)) {
+                            (new $middleware())->handle($this);
+                        }
+                    }
+                }
+
                 $controllerName = 'Source\\Controllers\\' . $route['controller'];
                 $action = $route['action'];
-
-                // Execução dos middlewares antes da ação
-                foreach ($route['middlewares'] as $middlewareClass) {
-                    /** @var MiddlewareInterface $middleware */
-                    $middleware = new $middlewareClass();
-                    $middleware->handle($this);
-                }
 
                 if (class_exists($controllerName)) {
                     $controller = new $controllerName($this);
@@ -115,13 +128,9 @@ class Router
         $this->redirect('error.show', ['code' => 404]);
     }
 
-
-    /**
-     * Recupera a rota pelo alias (name).
-     */
     public function getRouteByName(string $name): ?array
     {
-        foreach ($this->routes as $method => $routes) {
+        foreach ($this->routes as $routes) {
             foreach ($routes as $route) {
                 if ($route['name'] === $name) {
                     return $route;
@@ -131,22 +140,19 @@ class Router
         return null;
     }
 
-    /**
-     * Retorna a URL de uma rota pelo seu alias.
-     */
     public function url(string $name, array $params = []): string
     {
         $route = $this->getRouteByName($name);
         if (!$route) {
             return '#';
         }
-        $url = $route['path'];
 
-        // Substitui os placeholders pelos valores informados
+        $url = $route['path'];
         foreach ($params as $key => $value) {
             $url = str_replace('{' . $key . '}', $value, $url);
         }
-        return $url;
+
+        return rtrim($this->basePath, '/') . $url;
     }
 
     #[NoReturn] public function redirect(string $name, array $params = [], int $code = 302): void
@@ -162,5 +168,10 @@ class Router
 
         header("Location: " . $url, true, $code);
         exit();
+    }
+
+    public function basePath(): string
+    {
+        return $this->basePath;
     }
 }

@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= !empty($title) ? $title . " - " . CONF_SYSTEM_TITLE : CONF_SYSTEM_TITLE ?></title>
-    <?= \Source\Support\Asset::assets('main.js') ?>
+    <?= \Source\Support\Asset::assets('main.js', __DIR__ . '/../../public/dist/.vite/manifest.json', $router) ?>
+
     <link rel="icon" href="https://static.kabum.com.br/conteudo/favicon/favicon.ico" type="image/ico">
 </head>
 <body>
