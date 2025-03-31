@@ -1,0 +1,37 @@
+{
+  "name": "pedrootavioo/admin-kabum",
+  "description": "Portal Administrativo - KaBuM - Desenvolvedor PHP",
+  "authors": [
+    {
+      "name": "Pedro Repinaldo",
+      "email": "pedro@siuni.com.br",
+      "role": "Developer"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "Source\\": "source/",
+      "Tests\\": "tests/"
+    },
+    "files": [
+      "source/config.php"
+    ]
+  },
+  "config": {
+    "vendor-dir": "vendor",
+    "platform": {
+      "php": "8.4"
+    },
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "require": {
+    "php": ">=8.2",
+    "ext-pdo": "*",
+    "ext-mbstring": "*"
+  },
+  "require-dev": {
+    "pestphp/pest": "^3.8"
+  }
+}
