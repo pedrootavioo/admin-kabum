@@ -9,9 +9,9 @@ class Person extends Model
     protected string $table = 'persons';
     protected array $columns = [
         'name' => 'required|uppercase|min:3|max:100',
-        'birthdate' => 'date:Y-m-d,d/m/Y',
+        'birthdate' => 'required|date:Y-m-d,d/m/Y',
         'email' => 'email|lowercase|unique|max:50',
-        'document' => 'cpf|numeric|unique|min:11|max:14',
+        'document' => 'required|cpf|numeric|unique|min:11|max:14',
         'identity' => 'min:5|max:20',
         'phone' => 'min:10|max:20',
     ];

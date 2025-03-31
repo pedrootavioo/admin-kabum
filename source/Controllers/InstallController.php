@@ -2,15 +2,11 @@
 
 namespace Source\Controllers;
 
-use PDO;
 use PDOException;
-use PHPUnit\TextUI\Help;
 use Source\Core\Controller;
 use Source\Core\Db\Connect;
-use Source\Core\Env;
 use Source\Core\Router;
 use Source\Models\User;
-use Source\Support\Helper;
 
 class InstallController extends Controller
 {
@@ -66,6 +62,8 @@ class InstallController extends Controller
 
         try {
             $pdo->exec($dbContent);
+
+            $this->seedMainAdmin();
 
             $this->appendToEnv("INSTALLED=1");
 
