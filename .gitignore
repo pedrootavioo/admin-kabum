@@ -1,0 +1,35 @@
+# Arquivos e pastas sensíveis ou desnecessários no repositório
+
+# Ambiente
+.env
+
+# PHP
+/vendor/
+*.log
+
+# Vite e Front-end
+/node_modules/
+/dist/
+/public/assets/
+/public/build/
+
+# IDEs
+.idea/
+.vscode/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# PHPUnit / Pest
+.phpunit.result.cache
+
+# Cache e temporários
+/storage/cache/
+.cache/
+*.bak
+*.tmp
+*.swp
+
+# Arquivos de instalação automática
+install.lock
