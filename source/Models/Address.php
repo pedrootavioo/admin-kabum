@@ -32,9 +32,11 @@ class Address extends Model
         ?string $ibge_code,
         ?string $state,
         ?string $state_code,
-        ?bool   $main = false,
+        ?string $main = 'off',
     ): self
     {
+//        Helper::dd($main);
+
         $this->person_id = $person->id;
         $this->zipcode = $zipcode;
         $this->street = $street;
@@ -45,7 +47,7 @@ class Address extends Model
         $this->ibge_code = $ibge_code;
         $this->state = $state;
         $this->state_code = $state_code;
-        $this->main = $main;
+        $this->main = $main === 'off' ? 0 : 1;
 
         return $this;
     }
@@ -63,7 +65,7 @@ class Address extends Model
             $data['ibge_code'] ?? null,
             $data['state'] ?? null,
             $data['state_code'] ?? null,
-            $data['main'] ?? false
+            $data['main'] ?? 'off'
         );
 
         if (!$this->save()) {
