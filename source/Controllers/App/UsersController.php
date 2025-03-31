@@ -14,7 +14,7 @@ class UsersController extends Controller
         $this->view->render('app/users/index', [
             'title' => 'Usuários',
             'users' => User::query()->with('person')->get(),
-            'breadcrumb' => new Breadcrumb()
+            'breadcrumb' => (new Breadcrumb())
                 ->add('Início', 'app.index')
                 ->add('Usuários')
                 ->render($this->router)
@@ -26,7 +26,7 @@ class UsersController extends Controller
         $this->view->render('app/users/create-edit', [
             'title' => 'Novo Usuário',
             'user' => [],
-            'breadcrumb' => new Breadcrumb()
+            'breadcrumb' => (new Breadcrumb())
                 ->add('Início', 'app.index')
                 ->add('Usuários', 'users.index')
                 ->add('Novo Usuário')
@@ -44,7 +44,7 @@ class UsersController extends Controller
             'user' => $user,
             'person' => $user->person,
             'addresses' => $user->person->addresses(),
-            'breadcrumb' => new Breadcrumb()
+            'breadcrumb' => (new Breadcrumb())
                 ->add('Início', 'app.index')
                 ->add('Usuários', 'users.index')
                 ->add('Editar Usuário')

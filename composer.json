@@ -20,7 +20,7 @@
   "config": {
     "vendor-dir": "vendor",
     "platform": {
-      "php": "8.4"
+      "php": "8.2"
     },
     "allow-plugins": {
       "pestphp/pest-plugin": true

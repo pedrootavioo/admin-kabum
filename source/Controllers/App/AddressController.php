@@ -19,7 +19,7 @@ class AddressController extends Controller
                 'title' => 'Cadastrar Endereço',
                 'client' => $client,
                 'address' => null,
-                'breadcrumb' => new Breadcrumb()
+                'breadcrumb' => (new Breadcrumb())
                     ->add('Início', 'app.index')
                     ->add('Clientes', 'clients.index')
                     ->add($client->person->shortName(), 'clients.edit', [
@@ -42,7 +42,7 @@ class AddressController extends Controller
                 'title' => "Editar Endereço - {$client->person->name}",
                 'client' => $client,
                 'address' => $address,
-                'breadcrumb' => new Breadcrumb()
+                'breadcrumb' => (new Breadcrumb())
                     ->add('Início', 'app.index')
                     ->add('Clientes', 'clients.index')
                     ->add($client->person->shortName(), 'clients.edit', [

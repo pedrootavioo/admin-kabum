@@ -14,7 +14,7 @@ class ClientsController extends Controller
         $this->view->render('app/clients/index', [
             'title' => 'Clientes',
             'clients' => Client::query()->with('person')->get(),
-            'breadcrumb' => new Breadcrumb()
+            'breadcrumb' => (new Breadcrumb())
                 ->add('Início', 'app.index')
                 ->add('Clientes')
                 ->render($this->router)
@@ -26,7 +26,7 @@ class ClientsController extends Controller
         $this->view->render('app/clients/create-edit', [
             'title' => 'Novo Cliente',
             'client' => [],
-            'breadcrumb' => new Breadcrumb()
+            'breadcrumb' => (new Breadcrumb())
                 ->add('Início', 'app.index')
                 ->add('Clientes', 'clients.index')
                 ->add('Novo Cliente')
@@ -44,7 +44,7 @@ class ClientsController extends Controller
             'client' => $client,
             'person' => $client->person,
             'addresses' => $client->person->addresses(),
-            'breadcrumb' => new Breadcrumb()
+            'breadcrumb' => (new Breadcrumb())
                 ->add('Início', 'app.index')
                 ->add('Clientes', 'clients.index')
                 ->add('Editar Cliente')
