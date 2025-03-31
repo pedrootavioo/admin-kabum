@@ -12,7 +12,7 @@ Permitir o gerenciamento completo de **clientes** (CRUD), acessado por **usuári
 
 ## ⚙️ Tecnologias Utilizadas
 
-- **Back-end:** PHP 8.3+
+- **Back-end:** PHP 8.2+
 - **Banco de Dados:** MySQL
 - **Front-end:** Bootstrap 5 + Vite
 - **Testes:** Pest PHP
