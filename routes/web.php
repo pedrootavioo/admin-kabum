@@ -10,7 +10,7 @@ $router = new Router();
 /**
  * Auth
  */
-$router->get('/login', 'AuthController', 'index', 'auth.index');
+$router->get('/', 'AuthController', 'index', 'auth.index');
 $router->post('/auth/login', 'AuthController', 'login', 'auth.login');
 $router->get('/auth/logout', 'AuthController', 'logout', 'auth.logout');
 
