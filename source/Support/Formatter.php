@@ -8,7 +8,6 @@ class Formatter
 {
     public const DATE_FORMAT_DB = 'Y-m-d';
     public const DATE_FORMAT_DISPLAY = 'd/m/Y';
-    public const DATE_FORMAT_DISPLAY_TIME = 'd/m/Y H:i:s';
 
     /**
      * Aplica as regras definidas ao valor informado.
@@ -36,7 +35,6 @@ class Formatter
                     'lowercase' => self::lowercase($value),
                     'encrypted' => self::encrypted($value),
                     'numeric' => self::numeric($value),
-                    'checkbox' => self::checkbox($value),
                     default => $value,
                 };
             }
@@ -72,12 +70,6 @@ class Formatter
     {
         if (empty($value)) return '';
         return preg_replace('/[^0-9]/', '', $value);
-    }
-
-    public static function checkbox(mixed $value): bool
-    {
-        if (empty($value)) return false;
-        return $value === 'on' || $value === 'true' || $value === true;
     }
 
     /**
