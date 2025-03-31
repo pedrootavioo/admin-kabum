@@ -37,7 +37,7 @@ class Auth
                 $this->errors['general'] = 'Dados inválidos, tente novamente';
             }
 
-            if (!password_verify($password, $user->password)) {
+            if (!password_verify($password, $user?->password)) {
                 $this->errors['general'] = 'Dados inválidos, tente novamente';
             }
 
