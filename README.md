@@ -52,9 +52,15 @@ O instalador solicitará:
 2. Preencha as variáveis conforme necessário
 3. Importe o arquivo `db.sql` no seu banco de dados MySQL
 
-> 💡 *Opcional:* Um banco de dados hospedado em uma VPS foi disponibilizado para testes.  
-> Os dados estarão previamente preenchidos na instalação automática.  
-> ⚠️ **Atenção:** Este banco será desativado em **10/04/2025**.
+>#### 💡 OPCIONAL:  Um banco de dados hospedado em uma VPS foi disponibilizado para testes.  
+> Os dados estão previamente preenchidos de forma extraordinária, via input, na instalação automática.
+
+> ##### ⚠️ AVISO: CREDENCIAIS DE TESTE PARA AGILIDADE NA CANDIDATURA
+> **Importante:** Este repositório contém IP, senhas e usuários PARA TESTES EXCLUSIVAMENTE, utilizados para agilizar a demonstração e teste durante o processo de candidatura.
+> 
+> **Sem risco:** Essas credenciais NÃO dão acesso a dados reais ou sistemas em produção.
+> 
+> **Projeto real:** JAMAIS commito credenciais no código.
 
 ---
 
